@@ -1,0 +1,573 @@
+/* ---------------------------------------------------------------------
+   Design tokens
+   Dark, AWS-orange-accented palette in the spirit of join.awslpu.in:
+   near-black surfaces, a single warm accent, quiet borders, generous
+   space. Space Grotesk carries headlines; Inter carries everything a
+   person reads closely (body copy, labels, form fields).
+------------------------------------------------------------------------ */
+:root {
+  --bg: #0b0e14;
+  --surface: #12161d;
+  --surface-hover: #171c25;
+  --border: #232a35;
+  --text: #f2f4f7;
+  --text-muted: #8b93a3;
+  --accent: #ff9900;
+  --accent-dim: #b36b00;
+  --accent-soft: rgba(255, 153, 0, 0.12);
+  --success: #35c572;
+  --success-soft: rgba(53, 197, 114, 0.12);
+  --danger: #ff5a5f;
+  --danger-soft: rgba(255, 90, 95, 0.12);
+
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius: 10px;
+  --max-width: 1080px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.app-shell {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------
+   Nav
+------------------------------------------------------------------------ */
+.nav {
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 14, 20, 0.9);
+  backdrop-filter: blur(8px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.nav-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-brand-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #14181f;
+  font-weight: 700;
+  font-size: 13px;
+  font-family: var(--font-display);
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-link {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-muted);
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: var(--surface-hover);
+}
+
+.nav-link.active {
+  color: var(--text);
+  background: var(--surface);
+}
+
+/* ---------------------------------------------------------------------
+   Layout helpers
+------------------------------------------------------------------------ */
+.page {
+  flex: 1;
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 56px 24px 96px;
+}
+
+.page-narrow {
+  max-width: 520px;
+}
+
+.eyebrow {
+  font-size: 14px;
+  color: var(--accent);
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  line-height: 1.15;
+}
+
+.page-lede {
+  color: var(--text-muted);
+  font-size: 16px;
+  max-width: 60ch;
+  margin: 0 0 40px;
+}
+
+/* ---------------------------------------------------------------------
+   Hero (Home)
+------------------------------------------------------------------------ */
+.hero {
+  padding: 96px 24px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 720px;
+  height: 420px;
+  background: radial-gradient(closest-side, var(--accent-soft), transparent);
+  pointer-events: none;
+}
+
+.hero-mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #14181f;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 28px;
+  position: relative;
+}
+
+.hero-eyebrow {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin: 0 0 6px;
+  position: relative;
+}
+
+.hero-eyebrow strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 7vw, 68px);
+  line-height: 1.04;
+  margin: 20px 0 24px;
+  position: relative;
+}
+
+.hero-headline span {
+  display: block;
+}
+
+.hero-copy {
+  color: var(--text-muted);
+  font-size: 17px;
+  max-width: 54ch;
+  margin: 0 auto 36px;
+  position: relative;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+}
+
+.hero-meta {
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 13px;
+  position: relative;
+}
+
+/* ---------------------------------------------------------------------
+   Buttons
+------------------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #14181f;
+}
+
+.btn-primary:hover {
+  background: #ffab26;
+}
+
+.btn-primary:disabled {
+  background: var(--accent-dim);
+  color: rgba(20, 24, 31, 0.6);
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-hover);
+  border-color: #2c3542;
+}
+
+/* ---------------------------------------------------------------------
+   Cards
+------------------------------------------------------------------------ */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 64px;
+}
+
+.home-card-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.home-card h3 {
+  font-family: var(--font-display);
+  font-size: 17px;
+  margin: 0 0 8px;
+  font-weight: 600;
+}
+
+.home-card p {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------
+   Forms
+------------------------------------------------------------------------ */
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  font-family: var(--font-body);
+  transition: border-color 0.15s ease;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.form-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 6px;
+}
+
+/* ---------------------------------------------------------------------
+   Status banners (success / error / info)
+------------------------------------------------------------------------ */
+.banner {
+  border-radius: 8px;
+  padding: 14px 16px;
+  font-size: 14px;
+  margin-bottom: 24px;
+  border: 1px solid transparent;
+}
+
+.banner-success {
+  background: var(--success-soft);
+  border-color: rgba(53, 197, 114, 0.3);
+  color: var(--success);
+}
+
+.banner-error {
+  background: var(--danger-soft);
+  border-color: rgba(255, 90, 95, 0.3);
+  color: var(--danger);
+}
+
+.banner-info {
+  background: var(--accent-soft);
+  border-color: rgba(255, 153, 0, 0.3);
+  color: var(--accent);
+}
+
+/* ---------------------------------------------------------------------
+   Dashboard
+------------------------------------------------------------------------ */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.dashboard-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------------
+   Architecture flow
+------------------------------------------------------------------------ */
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.flow-node {
+  display: flex;
+  gap: 20px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-top: none;
+  text-align: left;
+  color: inherit;
+  width: 100%;
+}
+
+.flow-node:last-child {
+  border-bottom: none;
+}
+
+.flow-index {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text-muted);
+  width: 28px;
+  flex-shrink: 0;
+  padding-top: 2px;
+}
+
+.flow-node.active .flow-index {
+  color: var(--accent);
+}
+
+.flow-body {
+  flex: 1;
+}
+
+.flow-name {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flow-tag {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 2px 8px;
+}
+
+.flow-summary {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 6px 0 0;
+}
+
+.flow-detail {
+  margin-top: 14px;
+  padding: 16px 18px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ---------------------------------------------------------------------
+   Footer
+------------------------------------------------------------------------ */
+.footer {
+  border-top: 1px solid var(--border);
+  padding: 24px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+@media (max-width: 640px) {
+  .nav-inner {
+    padding: 14px 18px;
+  }
+  .nav-links {
+    gap: 2px;
+  }
+  .nav-link {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  .page {
+    padding: 40px 18px 72px;
+  }
+  .hero {
+    padding: 64px 18px 56px;
+  }
+}
