@@ -30,12 +30,24 @@ class InfrastructureStack(Stack):
             removal_policy=RemovalPolicy.DESTROY,
         )
         
+        table.add_global_secondary_index(
+            index_name="CheckInCredentialIndex",
+            partition_key=dynDB.Attribute(
+                name="checkInEventKey",
+                type=dynDB.AttributeType.STRING,
+            ),
+            sort_key=dynDB.Attribute(
+                name="CheckInHashID",
+                type=dynDB.AttributeType.STRING,
+            ),
+        )
+        
         register_lambda = lamda.Function(
             self,
             "RegisterLambda",
             runtime=lamda.Runtime.PYTHON_3_12,
             handler="handler.handler",
-            code=lamda.Code.from_asset("../lambda/register"),
+            code=lamda.Code.from_asset("lambda/register"),
             timeout=Duration.seconds(10),
             environment={
                 "TABLE_NAME": table.table_name,
@@ -47,7 +59,7 @@ class InfrastructureStack(Stack):
                     "CheckinLambda",
                     runtime=lamda.Runtime.PYTHON_3_12,
                     handler="handler.handler",
-                    code=lamda.Code.from_asset("../lambda/checkin"),
+                    code=lamda.Code.from_asset("lambda/checkin"),
                     timeout=Duration.seconds(10),
                     environment={
                         "TABLE_NAME": table.table_name,
@@ -59,7 +71,7 @@ class InfrastructureStack(Stack):
                             "EventLambda",
                             runtime=lamda.Runtime.PYTHON_3_12,
                             handler="handler.handler",
-                            code=lamda.Code.from_asset("../lambda/event"),
+                            code=lamda.Code.from_asset("lambda/event"),
                             timeout=Duration.seconds(10),
                             environment={
                                 "TABLE_NAME": table.table_name,
@@ -71,7 +83,7 @@ class InfrastructureStack(Stack):
                                     "StatsLambda",
                                     runtime=lamda.Runtime.PYTHON_3_12,
                                     handler="handler.handler",
-                                    code=lamda.Code.from_asset("../lambda/stats"),
+                                    code=lamda.Code.from_asset("lambda/stats"),
                                     timeout=Duration.seconds(10),
                                     environment={
                                         "TABLE_NAME": table.table_name,
