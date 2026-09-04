@@ -37,7 +37,7 @@ class InfrastructureStack(Stack):
                 type=dynDB.AttributeType.STRING,
             ),
             sort_key=dynDB.Attribute(
-                name="CheckInHashID",
+                name="checkInHashID",
                 type=dynDB.AttributeType.STRING,
             ),
         )
